@@ -23,9 +23,9 @@ exports.update_get = function (req, res) {
   var bici = Bicicleta.findById(req.params.id);
   res.render("bicicletas/update", { bici });
 };
-exports.update_post = function (req, res) {
+exports.update_post = function (req, res) { 
   var bici = new Bicicleta(req.body.id, req.body.color, req.body.modelo);
   bici.ubicacion = [req.body.lat, req.body.lng];
-  Bicicleta[req.params.id] = bici
+  Bicicleta.update(req.body.id, bici)
   res.redirect("/bicicletas");
 };

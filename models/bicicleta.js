@@ -7,7 +7,6 @@ let Bicicleta = function (id, color, modelo, ubicacion) {
   Bicicleta.prototype.toString = function () {
     return `id: ${this.id} | color: ${this.color}`;
   };
-  
   Bicicleta.allBicis = [];
   Bicicleta.add = function (aBici) {
     Bicicleta.allBicis.push(aBici);
@@ -17,7 +16,11 @@ let Bicicleta = function (id, color, modelo, ubicacion) {
     if (aBici) return aBici;
     else throw new Error(`No existe una Bicicleta con el id: ${aBiciId}`);
   };
-  
+  Bicicleta.update = function (aBiciId, newBici) {
+    let id = Bicicleta.allBicis.findIndex(bici => bici.id === aBiciId)
+    if (id) Bicicleta.allBicis[id] = newBici;
+    else throw new Error(`No existe una Bicicleta con el id: ${aBiciId}`);
+  };
   Bicicleta.removeById = function (aBiciId) {
     var aBici = Bicicleta.findById(aBiciId);
     for (let i = 0; i < Bicicleta.allBicis.length; i++) {
