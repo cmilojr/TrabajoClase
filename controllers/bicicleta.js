@@ -1,9 +1,13 @@
-const Bicicleta = require("../models/bicicleta");
+const { insertData, allBicis, findById, removeById} = require("../db");
+
 exports.list = function (re, res) {
-  res.render("bicicletas/index", { bicis: Bicicleta.allBicis });
+  allBicis().then(resolve => {
+    console.log(resolve)
+    res.render("bicicletas/index", {bicis: resolve})
+  })
 };
 exports.show = function (req, res) {
-  var bici = Bicicleta.findById(req.params.id);
+  var bici = findById(req.params.id);
   res.render("bicicletas/show", { bici });
 };
 exports.create_get = function (req, res) {
@@ -12,20 +16,20 @@ exports.create_get = function (req, res) {
 exports.create_post = function (req, res) {
   var bici = new Bicicleta(req.body.id, req.body.color, req.body.modelo);
   bici.ubicacion = [req.body.lat, req.body.lng];
-  Bicicleta.add(bici);
+  insertData(bici)
   res.redirect("/bicicletas");
 };
 exports.delete = function (req, res) {
-  Bicicleta.removeById(req.body.id);
+  removeById(req.body.id);
   res.redirect("/bicicletas");
 };
 exports.update_get = function (req, res) {
-  var bici = Bicicleta.findById(req.params.id);
+  var bici = findById(req.params.id);
   res.render("bicicletas/update", { bici });
 };
 exports.update_post = function (req, res) { 
   var bici = new Bicicleta(req.body.id, req.body.color, req.body.modelo);
   bici.ubicacion = [req.body.lat, req.body.lng];
-  Bicicleta.update(req.body.id, bici)
+  update(req.body.id, bici)
   res.redirect("/bicicletas");
 };

@@ -1,3 +1,5 @@
+const db = require('../db')
+
 let Bicicleta = function (id, color, modelo, ubicacion) {
     this.id = id;
     this.color = color;
@@ -7,10 +9,9 @@ let Bicicleta = function (id, color, modelo, ubicacion) {
   Bicicleta.prototype.toString = function () {
     return `id: ${this.id} | color: ${this.color}`;
   };
-  Bicicleta.allBicis = [];
-  Bicicleta.add = function (aBici) {
-    Bicicleta.allBicis.push(aBici);
-  };
+
+  const allBicis = async() => await db.allBicis()
+
   Bicicleta.findById = function (aBiciId) {
     var aBici = Bicicleta.allBicis.find((x) => x.id == aBiciId);
     if (aBici) return aBici;
@@ -31,4 +32,7 @@ let Bicicleta = function (id, color, modelo, ubicacion) {
     }
   };
   
-  module.exports = Bicicleta;
+  module.exports = {
+    Bicicleta,
+    allBicis,
+  };

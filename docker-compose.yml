@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  express:
+    image: "node:14"
+    build: .
+    container_name: express
+    ports:
+      - "3001:3001"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: mongodb
+    volumes:
+      - ~/mongo:/data/db
